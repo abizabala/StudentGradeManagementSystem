@@ -53,62 +53,6 @@ namespace StudentGradeManagement.API.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Faculty",
-                columns: table => new
-                {
-                    FacultyId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    FacultyNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    IsActive = table.Column<bool>(type: "bit", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Faculty", x => x.FacultyId);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "StudentGrades",
-                columns: table => new
-                {
-                    GradeId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    StudentId = table.Column<int>(type: "int", nullable: false),
-                    SubjectCode = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    SubjectName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    FacultyId = table.Column<int>(type: "int", nullable: false),
-                    Grade = table.Column<int>(type: "int", nullable: false),
-                    Remarks = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Semester = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    SchoolYear = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    DatePosted = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    DateModified = table.Column<DateTime>(type: "datetime2", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_StudentGrades", x => x.GradeId);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Students",
-                columns: table => new
-                {
-                    StudentId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    StudentNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    IsActive = table.Column<bool>(type: "bit", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Students", x => x.StudentId);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "AspNetRoleClaims",
                 columns: table => new
                 {
@@ -271,15 +215,6 @@ namespace StudentGradeManagement.API.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUserTokens");
-
-            migrationBuilder.DropTable(
-                name: "Faculty");
-
-            migrationBuilder.DropTable(
-                name: "StudentGrades");
-
-            migrationBuilder.DropTable(
-                name: "Students");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

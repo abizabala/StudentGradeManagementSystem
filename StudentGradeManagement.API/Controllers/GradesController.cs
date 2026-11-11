@@ -4,6 +4,7 @@ using StudentGradeManagement.API.Data;
 using StudentGradeManagement.API.DTOs;
 using StudentGradeManagement.API.Models;
 using StudentGradeManagement.API.Services;
+using Microsoft.AspNetCore.Authorization;
 
 namespace StudentGradeManagement.API.Controllers;
 
@@ -37,6 +38,7 @@ public class GradesController : ControllerBase
         return Ok(grade);
     }
 
+    [Authorize(Roles = "Faculty")]
     [HttpPost]
     public async Task<IActionResult> CreateGrade(CreateGradeDto dto)
     {
@@ -68,6 +70,7 @@ public class GradesController : ControllerBase
             grade);
     }
 
+    [Authorize(Roles = "Faculty")]
     [HttpPut("{id}")]
     public async Task<IActionResult> UpdateGrade(
     int id,
@@ -96,6 +99,7 @@ public class GradesController : ControllerBase
         return Ok(grade);
     }
 
+    [Authorize(Roles = "Faculty")]
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteGrade(int id)
     {

@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using StudentGradeManagement.API.Data;
 using Microsoft.AspNetCore.Identity;
 using StudentGradeManagement.API.Models;
+using StudentGradeManagement.API.Seed;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,9 +17,16 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(
         builder.Configuration.GetConnectionString("DefaultConnection")));
 
-builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
-    .AddEntityFrameworkStores<ApplicationDbContext>()
-    .AddDefaultTokenProviders();
+builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
+{
+    options.Password.RequireDigit = false;
+    options.Password.RequireUppercase = false;
+    options.Password.RequireLowercase = false;
+    options.Password.RequireNonAlphanumeric = false;
+    options.Password.RequiredLength = 6;
+})
+.AddEntityFrameworkStores<ApplicationDbContext>()
+.AddDefaultTokenProviders();
 
 builder.Services.AddCors(options =>
 {
@@ -49,5 +57,20 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+
+using (var scope = app.Services.CreateScope())
+{
+    var roleManager =
+        scope.ServiceProvider
+            .GetRequiredService<RoleManager<IdentityRole>>();
+
+    var userManager =
+        scope.ServiceProvider
+            .GetRequiredService<UserManager<ApplicationUser>>();
+
+    await RoleSeeder.SeedRolesAsync(roleManager);
+
+    await UserSeeder.SeedUsersAsync(userManager);
+}
 
 app.Run();
