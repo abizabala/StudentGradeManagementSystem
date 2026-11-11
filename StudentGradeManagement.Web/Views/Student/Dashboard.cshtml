@@ -1,0 +1,60 @@
+﻿<h1>Student Dashboard</h1>
+
+<div id="message"></div>
+
+<table border="1">
+    <thead>
+        <tr>
+            <th>Subject Code</th>
+            <th>Subject Name</th>
+            <th>Grade</th>
+            <th>Remarks</th>
+            <th>Semester</th>
+            <th>School Year</th>
+        </tr>
+    </thead>
+
+    <tbody id="gradeTableBody">
+    </tbody>
+</table>
+
+<script>
+
+    async function loadGrades()
+    {
+        try
+        {
+            const response =
+                await fetch("https://localhost:7057/api/grades");
+
+            const data =
+                await response.json();
+
+            let rows = "";
+
+            data.forEach(g =>
+            {
+                rows += `
+                <tr>
+                    <td>${g.subjectCode}</td>
+                    <td>${g.subjectName}</td>
+                    <td>${g.grade}</td>
+                    <td>${g.remarks}</td>
+                    <td>${g.semester}</td>
+                    <td>${g.schoolYear}</td>
+                </tr>`;
+            });
+
+            document.getElementById("gradeTableBody")
+                .innerHTML = rows;
+        }
+        catch
+        {
+            document.getElementById("message")
+                .innerText = "Failed to load grades.";
+        }
+    }
+
+    loadGrades();
+
+</script>
